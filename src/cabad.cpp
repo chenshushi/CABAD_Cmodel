@@ -54,5 +54,5 @@ unsigned int CABAD::ReadBitstream(unsigned int length) {
 		data = (data << length) & 0xff;
 		bitcnt = bitcnt - length;
 	}
-	return ret;
+	
 }

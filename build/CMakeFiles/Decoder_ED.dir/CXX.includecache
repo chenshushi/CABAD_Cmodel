@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../src/cabad.h
+define.h
+../src/define.h
+stdio.h
+../src/stdio.h
+
+../src/define.h
+
+/mnt/e/Decoder/CABAD_Cmodel/main.cpp
+cabad.h
+/mnt/e/Decoder/CABAD_Cmodel/cabad.h
+

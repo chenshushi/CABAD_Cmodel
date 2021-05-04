@@ -12,7 +12,7 @@ int main(void) {
 				cabad.mb_y = i;
 				cabad.cabad_proc(edout);
 			}
-			/* printf("bytecnt=%x\n", cabad.bytecnt); */
+			printf("bytecnt=%x\n", cabad.bytecnt);
 		}
 	}
 	fclose(cabad.m_fpCabadInput_I);

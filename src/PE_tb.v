@@ -1,10 +1,11 @@
+`timescale 1ns/1ns
 module PE_tb();
 reg                 r_clk       ;
 reg                 r_rst_n     ;
 reg [15:0]          r_picDat    ;
 reg [15:0]          r_weightDat ;
 wire[36:0]          w_result    ;
-wire[36:0]          w_valid     ;
+wire                w_valid     ;
 
 initial begin
     r_clk       = 1'b0;
@@ -16,8 +17,21 @@ initial begin
     #2
     r_rst_n = 1'b1;
     #2
+    r_picDat    = 16'd2;
+    r_weightDat = 16'd2;
+    #11
     r_picDat    = 16'd1;
     r_weightDat = 16'd1;
+    #240
+    r_picDat    = 16'd2;
+    r_weightDat = 16'd2;
+    #10
+    r_picDat    = 16'd1;
+    r_weightDat = 16'd1;
+    #10
+    r_picDat    = 16'd2;
+    r_weightDat = 16'd2;
+    
 end
 always begin
     #5 r_clk = ~r_clk;

@@ -13,7 +13,7 @@ module PE#(
     output reg                                  valid
 );
 
-wire [(data_width + weight_width):0]      w_tmp_result;
+wire [(data_width + weight_width - 1):0]      w_tmp_result;
 mul mul_u(
     .clk(clk),
     .a(picDat),
@@ -22,19 +22,24 @@ mul mul_u(
 );
 
 reg [4:0] cnt;
+reg [(result_width-1) :0] temp_result;
 always@(posedge clk or negedge rst_n) begin
-    if (!rst_n)
-        cnt <= 5'd0;
-    else if (cnt == 5'd24)
-        cnt <= 5'd0;
-    else
-        cnt <= cnt + 5'd1;
-end
-
-always@(posedge clk or negedge rst_n) begin
-    if (!rst_n || cnt == 5'd24)
+    if (!rst_n) begin
         result <= 0;     //data width ?
-    else
-        result <= result + w_tmp_result;
+        temp_result  <= 0;
+        cnt          <= 5'd0;
+        valid        <= 1'd0;
+    end
+    else if(cnt == 5'd26) begin
+        result <= temp_result;
+        temp_result <= 0;
+        cnt    <= 5'd1;
+        valid  <= 1'd1;
+    end
+    else begin
+        temp_result <= temp_result + w_tmp_result;
+        cnt <= cnt + 5'd1;
+         valid  <= 1'd0;
+    end
 end
 endmodule

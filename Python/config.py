@@ -1,17 +1,18 @@
 import time
 class Default_cfg(object):
-    env = 'default'
     model       = 'PYNQ_net'   # the name of your model, should keepace with medel/__init__.py
     batch_size  = 4
     lr          = 0.01
     max_epoch   = 10
-    load_model_path = 'checkpoints/model.pth'
+    load_model_path = ''
+    train_data_root = ''
     use_gpu     = True
-    train_data_root = './data/train/'
-    test_data_root  = './data/test1'
-    print_freq = 20
-    lr_decay   = 0.1
-    result_file = 'result.csv'
+    test_data   = ''
+    batch_size  = 128
+    num_workers = 4
+    weight_decay= 0.1
+    print_freq = 20 # print info every N batch
+    lr_decay   = 0.01
     def __parse__ (self,kwargs):
         '''
            update the config parameter accroding to kwags

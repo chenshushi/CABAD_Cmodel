@@ -4,6 +4,9 @@ class Default_cfg(object):
     batch_size  = 4
     lr          = 0.01
     max_epoch   = 10
+    load_model_path = ''
+    use_gpu     = True
+    test_data   = ''
     def __parse__ (self,kwargs):
         '''
            update the config parameter accroding to kwags

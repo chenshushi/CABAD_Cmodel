@@ -48,7 +48,7 @@ def write_csv(results,file_name):
 def train(**kwargs):
     opt.parse(kwargs)
     vis = Visualizer(opt.env)
-
+    print(t.cuda.is_available())
     # step1: configure model
     model = getattr(models, opt.model)()
     if opt.load_model_path:
@@ -66,7 +66,8 @@ def train(**kwargs):
     # step3: criterion and optimizer
     criterion = t.nn.CrossEntropyLoss()
     lr = opt.lr
-    optimizer = t.optim.Adam(model.parameters(),lr = lr,weight_decay = opt.weight_decay)
+    # optimizer = t.optim.Adam(model.parameters(),lr = lr,weight_decay = opt.weight_decay)
+    optimizer = t.optim.SGD(model.parameters(),lr = lr,weight_decay = opt.weight_decay)
         
     # step4: meters
     loss_meter = meter.AverageValueMeter()
@@ -79,7 +80,7 @@ def train(**kwargs):
         loss_meter.reset()
         confusion_matrix.reset()
 
-        for ii,(data,label) in tqdm(enumerate(train_dataloader),total=len(train_data)):
+        for ii,(data,label) in tqdm(enumerate(train_dataloader),total=int(len(train_data) / opt.batch_size) + 1):
 
             # train model 
             input = Variable(data)
@@ -96,7 +97,8 @@ def train(**kwargs):
             
             
             # meters update and visualize
-            loss_meter.add(loss.data[0])
+            # loss_meter.add(loss.data[0])
+            loss_meter.add(loss.item())
             confusion_matrix.add(score.data, target.data)
 
             if ii%opt.print_freq==opt.print_freq-1:
@@ -135,8 +137,8 @@ def val(model,dataloader):
     confusion_matrix = meter.ConfusionMeter(2)
     for ii, data in enumerate(dataloader):
         input, label = data
-        val_input = Variable(input, volatile=True)
-        val_label = Variable(label.type(t.LongTensor), volatile=True)
+        val_input = Variable(input)
+        val_label = Variable(label.type(t.LongTensor))
         if opt.use_gpu:
             val_input = val_input.cuda()
             val_label = val_label.cuda()

@@ -2,7 +2,7 @@
 import warnings
 class DefaultConfig(object):
     env = 'default' # visdom 环境
-    model = 'AlexNet' # 使用的模型，名字必须与models/__init__.py中的名字一致
+    model = 'Q_AlexNet' # 使用的模型，名字必须与models/__init__.py中的名字一致
     
     train_data_root = './data/train/' # 训练集存放路径
     test_data_root = './data/test1' # 测试集存放路径
@@ -20,6 +20,7 @@ class DefaultConfig(object):
     lr = 0.1 # initial learning rate
     lr_decay = 0.95 # when val_loss increase, lr = lr*lr_decay
     weight_decay = 1e-4 # 损失函数
+    quantization = True
 
 
 

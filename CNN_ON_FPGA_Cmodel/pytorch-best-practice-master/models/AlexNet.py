@@ -86,7 +86,7 @@ class Q_AlexNet(BasicModule):
     def forward(self, x):
         x = self.quant(x)
         x = self.features(x)
-        x = x.view(x.size(0), 256 * 6 * 6)
+        x = x.contiguous().view(x.size(0), 256 * 6 * 6)
         x = self.classifier(x)
         x = self.dquant(x)
         return x

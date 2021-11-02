@@ -143,7 +143,7 @@ def val(model,dataloader,falg_quantation):
         print("\n\nAFTER : quantized model !!! :\n")
         print(model)
         print("\n\n\n")
-        BACKEND = "fbgemm"
+        BACKEND = "qnnpack"
         t.backends.quantized.engine = BACKEND
     confusion_matrix = meter.ConfusionMeter(2)
     for ii, data in enumerate(dataloader):
@@ -167,7 +167,7 @@ def Quantization_train(**kwargs):
     print(t.cuda.is_available())
     # step :change the model
     if opt.quantization:
-        BACKEND = "fbgemm"
+        BACKEND = "qnnpack"
         model = getattr(models, opt.model)()
         model.qconfig = t.quantization.get_default_qat_qconfig(BACKEND)
         print("\nmodel config  :\n")
